@@ -34,20 +34,29 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
+    // Core AndroidX
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.lifecycle.viewmodel)
-    implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.okhttp.logging)
+    implementation(libs.androidx.datastore.preferences)
+
+    // Lifecycle
+    implementation(libs.bundles.lifecycle)
+
+    // Networking
+    implementation(libs.bundles.networking)
+
+    // Coroutines
     implementation(libs.kotlinx.coroutines)
 
+    // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // Unit Testing
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    // UI Testing
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

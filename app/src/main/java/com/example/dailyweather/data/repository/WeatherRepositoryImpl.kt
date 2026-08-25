@@ -1,6 +1,7 @@
 package com.example.dailyweather.data.repository
 
 import com.example.dailyweather.data.WeatherRemoteDataSource
+import com.example.dailyweather.data.local.RecentCityLocalDataSource
 import com.example.dailyweather.data.mapper.WeatherMapper
 import com.example.dailyweather.data.model.ApiResults
 import com.example.dailyweather.domain.model.Weather
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
     private val remoteDataSource: WeatherRemoteDataSource,
+    private val localDataSource: RecentCityLocalDataSource,
     private val mapper: WeatherMapper
 ) : WeatherRepository {
 
@@ -40,5 +42,13 @@ class WeatherRepositoryImpl @Inject constructor(
                 )
             }
         }
+    }
+
+    override suspend fun getLastCity(): String? {
+        return localDataSource.getLastCity()
+    }
+
+    override suspend fun saveLastCity(city: String) {
+        localDataSource.saveLastCity(city)
     }
 }

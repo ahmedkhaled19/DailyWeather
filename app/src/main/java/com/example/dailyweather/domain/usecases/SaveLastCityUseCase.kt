@@ -1,0 +1,14 @@
+package com.example.dailyweather.domain.usecases
+
+import com.example.dailyweather.domain.repository.WeatherRepository
+import javax.inject.Inject
+
+class SaveLastCityUseCase @Inject constructor(
+    private val repository: WeatherRepository
+) {
+
+    suspend operator fun invoke(city: String) {
+        repository.saveLastCity(city)
+    }
+
+}
