@@ -15,6 +15,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -96,7 +98,11 @@ private fun CurrentWeatherCard(
                 AsyncImage(
                     model = weather.current.iconUrl,
                     contentDescription = weather.current.description,
-                    modifier = Modifier.height(80.dp)
+                    modifier = Modifier.height(80.dp),
+                    placeholder = painterResource(R.drawable.ic_weather_placeholder),
+                    error = painterResource(R.drawable.ic_weather_placeholder),
+                    fallback = painterResource(R.drawable.ic_weather_placeholder),
+                    contentScale = ContentScale.Fit
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -193,9 +199,12 @@ private fun HourlyForecastItem(
             AsyncImage(
                 model = forecast.iconUrl,
                 contentDescription = forecast.description,
-                modifier = Modifier.height(40.dp)
+                modifier = Modifier.height(40.dp),
+                placeholder = painterResource(R.drawable.ic_weather_placeholder),
+                error = painterResource(R.drawable.ic_weather_placeholder),
+                fallback = painterResource(R.drawable.ic_weather_placeholder),
+                contentScale = ContentScale.Fit
             )
-
             Column {
                 Text(
                     text = forecast.getFormattedTime(),
@@ -212,7 +221,7 @@ private fun HourlyForecastItem(
         Column {
             Text(
                 text =
-                stringResource(R.string.temperature_c, forecast.temperatureCelsius),
+                    stringResource(R.string.temperature_c, forecast.temperatureCelsius),
                 style = MaterialTheme.typography.bodyLarge
             )
 
@@ -224,12 +233,19 @@ private fun HourlyForecastItem(
     }
 }
 
-@Preview(showBackground = true)
+
+@Preview(
+    showBackground = true,
+    showSystemUi = false,
+    name = "Current Weather"
+)
 @Composable
-fun WeatherContentPreview() {
+fun CurrentWeatherCardPreview() {
     MaterialTheme {
-        Surface {
-            WeatherContent(
+        Surface(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            CurrentWeatherCard(
                 weather = Weather(
                     city = "Cairo",
                     country = "Egypt",
@@ -240,25 +256,77 @@ fun WeatherContentPreview() {
                         windSpeedKmph = 15,
                         uvIndex = 5,
                         description = "Sunny",
-                        iconUrl = "https://example.com/icon.png"
+                        iconUrl = ""
                     ),
-                    forecast = listOf(
-                        DailyForecast(
-                            date = "2023-10-27",
-                            minTemperatureCelsius = 20,
-                            maxTemperatureCelsius = 30,
-                            hourlyForecast = listOf(
-                                HourlyForecast(
-                                    time = "1200",
-                                    temperatureCelsius = 25,
-                                    chanceOfRain = 0,
-                                    description = "Sunny",
-                                    iconUrl = "https://example.com/icon.png"
-                                )
-                            )
+                    forecast = emptyList()
+                )
+            )
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = false,
+    name = "Forecast Card"
+)
+@Composable
+fun ForecastCardPreview() {
+    MaterialTheme {
+        Surface(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ForecastCard(
+                forecast = DailyForecast(
+                    date = "2026-08-26",
+                    minTemperatureCelsius = 16,
+                    maxTemperatureCelsius = 20,
+                    hourlyForecast = listOf(
+                        HourlyForecast(
+                            time = "1200",
+                            temperatureCelsius = 20,
+                            chanceOfRain = 13,
+                            description = "Overcast",
+                            iconUrl = "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
+                        ),
+                        HourlyForecast(
+                            time = "1500",
+                            temperatureCelsius = 19,
+                            chanceOfRain = 25,
+                            description = "Patchy rain nearby",
+                            iconUrl = "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
+                        ),
+                        HourlyForecast(
+                            time = "1800",
+                            temperatureCelsius = 18,
+                            chanceOfRain = 28,
+                            description = "Patchy rain nearby",
+                            iconUrl = "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
                         )
                     )
                 )
+            )
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    name = "Hourly Forecast"
+)
+@Composable
+fun HourlyForecastItemPreview() {
+    MaterialTheme {
+        Surface(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            HourlyForecastItem(
+                forecast = HourlyForecast(
+                    time = "1200",
+                    temperatureCelsius = 22,
+                    chanceOfRain = 10,
+                    description = "Sunny",
+                    iconUrl = "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"                )
             )
         }
     }

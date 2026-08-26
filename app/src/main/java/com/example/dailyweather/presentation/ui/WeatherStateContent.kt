@@ -10,6 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -69,6 +73,8 @@ private fun ErrorWeatherContent(
     message: String,
     onRetry: () -> Unit
 ) {
+    var lastClickTime by remember { mutableLongStateOf(0L) }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -77,7 +83,13 @@ private fun ErrorWeatherContent(
             text = message,
             color = MaterialTheme.colorScheme.error
         )
-        Button(onClick = onRetry) {
+        Button(onClick = {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClickTime > 500L) {
+                lastClickTime = currentTime
+                onRetry()
+            }
+        }) {
             Text(stringResource(R.string.retry))
         }
     }
@@ -93,7 +105,7 @@ fun LoadingPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "ErrorPreview")
 @Composable
 fun ErrorPreview() {
     MaterialTheme {

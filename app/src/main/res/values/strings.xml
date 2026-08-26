@@ -14,5 +14,5 @@
     <string name="temperature_c">%1$d°C</string>
     <string name="feels_like_c">Feels like %1$d°C</string>
     <string name="hourly_forecast">Hourly forecast</string>
-    <string name="rain">%1$d% rain</string>
+    <string name="rain">%1$d%% rain</string>
 </resources>

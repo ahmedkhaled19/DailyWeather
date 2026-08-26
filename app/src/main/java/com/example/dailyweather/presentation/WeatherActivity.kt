@@ -78,7 +78,8 @@ fun WeatherScreen(
             CitySearchSectionContent(
                 city = city,
                 onCityChanged = onCityChanged,
-                onSearch = onSearch
+                onSearch = onSearch,
+                enabled = uiState !is WeatherUiState.Loading
             )
             WeatherStateContent(
                 uiState = uiState,

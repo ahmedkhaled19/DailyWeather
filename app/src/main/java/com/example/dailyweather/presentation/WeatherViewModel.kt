@@ -27,6 +27,8 @@ class WeatherViewModel @Inject constructor(
     private val _city = MutableStateFlow("")
     val city: StateFlow<String> = _city.asStateFlow()
 
+    private var lastSearchedCity: String? = null
+
     init {
         loadLastCity()
     }
@@ -38,19 +40,24 @@ class WeatherViewModel @Inject constructor(
                 _weatherUiState.value = WeatherUiState.Empty
             } else {
                 _city.value = lastCity
+                lastSearchedCity = lastCity
                 loadWeather(lastCity)
             }
         }
     }
 
     fun onCityChanged(city: String) {
-        _city.value = city
+        val filteredCity = city.filter { it in 'a'..'z' || it in 'A'..'Z' || it == ' ' }
+        _city.value = filteredCity
     }
 
     fun searchWeather() {
         val city = _city.value.trim()
         if (city.isBlank()) {
             _weatherUiState.value = WeatherUiState.Error("Please enter a valid city")
+            return
+        }
+        if (city.equals(lastSearchedCity, ignoreCase = true) && _weatherUiState.value is WeatherUiState.Success) {
             return
         }
         loadWeather(city)
@@ -61,15 +68,14 @@ class WeatherViewModel @Inject constructor(
             _weatherUiState.value = WeatherUiState.Loading
             when (val result = getWeatherUseCase(city)) {
                 is ApiResult.Success -> {
+                    lastSearchedCity = city
                     saveLastCityUseCase(city)
                     _weatherUiState.value = WeatherUiState.Success(result.data)
-
                 }
 
                 is ApiResult.Failure -> {
                     _weatherUiState.value = WeatherUiState.Error(result.errorMessage)
                 }
-
             }
         }
     }
