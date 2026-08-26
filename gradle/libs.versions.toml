@@ -27,6 +27,9 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 ui = "1.12.0"
+mockito_kotlin = "4.1.0"
+mockk = "1.14.11"
+coroutinesTest = "1.11.0"
 
 [libraries]
 # AndroidX
@@ -68,6 +71,9 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito_kotlin" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 
 [bundles]
 lifecycle = ["androidx-lifecycle-runtime", "androidx-lifecycle-viewmodel"]
