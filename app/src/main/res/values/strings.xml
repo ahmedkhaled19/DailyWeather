@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Daily Weather</string>
+    <string name="daily_weather">Daily Weather</string>
+    <string name="city">City</string>
+    <string name="enter_city">Enter city</string>
+    <string name="search">Search</string>
+    <string name="search_for_a_city_to_see_the_weather">Search for a city to see the weather</string>
+    <string name="retry">Retry</string>
+    <string name="forecast">Forecast</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="uv_index">UV Index</string>
+    <string name="km_h">%1$d km/h</string>
+    <string name="temperature_c">%1$d°C</string>
+    <string name="feels_like_c">Feels like %1$d°C</string>
+    <string name="hourly_forecast">Hourly forecast</string>
+    <string name="rain">%1$d% rain</string>
 </resources>

@@ -8,8 +8,9 @@ import com.example.dailyweather.domain.model.CurrentWeather
 import com.example.dailyweather.domain.model.DailyForecast
 import com.example.dailyweather.domain.model.HourlyForecast
 import com.example.dailyweather.domain.model.Weather
+import javax.inject.Inject
 
-class WeatherMapper {
+class WeatherMapper @Inject constructor() {
 
     fun map(response: WeatherResponseDto): Weather {
         val currentCondition = response.current_condition.firstOrNull()

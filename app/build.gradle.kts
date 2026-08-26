@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
 }
@@ -31,20 +32,41 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        compose = true
+    }
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 dependencies {
     // Core AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.ui)
     implementation(libs.material)
     implementation(libs.androidx.datastore.preferences)
 
     // Lifecycle
     implementation(libs.bundles.lifecycle)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.activity)
 
     // Networking
     implementation(libs.bundles.networking)
+
+    // Image Loading
+    implementation(libs.coil.compose)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines)
